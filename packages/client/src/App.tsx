@@ -1,4 +1,5 @@
 import * as React from "react";
+import {Button} from "@/components/ui/button.tsx";
 
 function App() {
     const [message, setMessage] = React.useState("")
@@ -11,8 +12,9 @@ function App() {
     }, []);
 
   return (
-    <div className="bg-gray-100 p-4">
+    <div className="bg-gray-100 p-4 space-y-4">
       <h1 className="text-blue-500 font-bold">{message}</h1>
+      <Button>Click me</Button>
     </div>
   )
 }
