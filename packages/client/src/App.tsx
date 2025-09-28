@@ -1,9 +1,10 @@
-import ChatBot from '@/components/chat/ChatBot.tsx';
+import ReviewList from '@/components/reviews/ReviewList.tsx';
 
 function App() {
    return (
       <div className="p-4 h-screen">
-         <ChatBot />
+         {/*<ChatBot />*/}
+         <ReviewList productId={2} />
       </div>
    );
 }

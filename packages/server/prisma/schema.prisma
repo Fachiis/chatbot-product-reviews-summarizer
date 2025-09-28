@@ -1,0 +1,49 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Product {
+  id          Int      @id @default(autoincrement())
+  name        String   @db.VarChar(255)
+  description String?  @db.Text
+  price       Float
+  reviews     Review[]
+  summary     Summary?
+
+  @@map("products") // Map to existing table name in the database. Table will now be called "products" instead of "Product"
+}
+
+model Review {
+  id        Int      @id @default(autoincrement())
+  author    String   @db.VarChar(255)
+  rating    Int      @default(1) @db.TinyInt
+  content   String   @db.Text
+  createdAt DateTime @default(now())
+  productId Int
+  product   Product  @relation(fields: [productId], references: [id])
+
+  @@map("reviews")
+}
+
+model Summary {
+  id          Int      @id @default(autoincrement())
+  content     String   @db.Text
+  generatedAt DateTime @default(now())
+  expiresAt   DateTime
+  productId   Int      @unique
+  product     Product  @relation(fields: [productId], references: [id])
+
+  @@map("summaries")
+}
